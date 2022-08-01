@@ -37,9 +37,11 @@ public class WeatherForecastController : ControllerBase
 
     private async Task  SendEmail()
     {
+        // Note : From address change based on the configuration outlook or membership-app.me
+        var from = "uaekmcc@outlook.com";
+
         var html = HtmlBinder.Create("1", "2", "3", "4");
         var subject = "Test email service";
-        var from = "uaekmcc@outlook.com";
         var to = "rafi.genius.cs@gmail.com";
 
         var email = new MimeMessage();
@@ -51,7 +53,12 @@ public class WeatherForecastController : ControllerBase
         // send email
         using var smtp = new SmtpClient();
         smtp.Connect("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
-        smtp.Authenticate("uaekmcc@outlook.com", "3434");
+        smtp.Authenticate("uaekmcc@outlook.com", "Kmcc@7425403");
+
+        // Note : From address change based on the configuration
+        // smtp.Connect("mail.privateemail.com", 465, SecureSocketOptions.SslOnConnect);
+        // smtp.Authenticate("muhammed.rafi@membership-app.me", "Mem@4296326");
+
         await smtp.SendAsync(email);
         smtp.Disconnect(true);
 
