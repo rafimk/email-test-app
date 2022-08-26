@@ -3,6 +3,7 @@ using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
 using Microsoft.AspNetCore.Mvc;
+using PasswordGenerator;
 
 namespace email_test_app.Controllers;
 
@@ -39,8 +40,10 @@ public class WeatherForecastController : ControllerBase
     {
         // Note : From address change based on the configuration outlook or membership-app.me
         var from = "uaekmcc@outlook.com";
+        var pwd = new Password().IncludeLowercase().IncludeUppercase().IncludeNumeric().LengthRequired(8);
+        var password = pwd.Next();
 
-        var html = HtmlBinder.Create("1", "2", "3", "4");
+        var html = HtmlBinder.Create(password);
         var subject = "Test email service";
         var to = "rafi.genius.cs@gmail.com";
 
